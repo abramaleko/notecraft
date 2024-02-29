@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:notecraft/views/notes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,9 +31,11 @@ class MyApp extends StatelessWidget {
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
+        useMaterial3: true,      
+        textTheme: GoogleFonts.robotoTextTheme() 
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Notes(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
