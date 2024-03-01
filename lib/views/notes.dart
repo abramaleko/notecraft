@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:notecraft/widgets/notes_cards.dart';
 import 'package:notecraft/widgets/notes_folder.dart';
 
@@ -19,7 +20,7 @@ class _NotesState extends State<Notes> {
           padding: const EdgeInsets.only(bottom: 20.0),
           child: FloatingActionButton(
             elevation: 4.0,
-            onPressed: () {},
+            onPressed:() => context.goNamed('new-note'),
             backgroundColor: Theme.of(context).colorScheme.primary,
             child: Icon(
               Icons.add,
