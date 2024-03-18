@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "394710791043",
+    "project_id": "notecraft-375a7",
+    "storage_bucket": "notecraft-375a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394710791043:android:d1ad6eda52e0994e6cbcb6",
+        "android_client_info": {
+          "package_name": "com.example.notecraft"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVTLhvjQW6zcp1ftGy-VthCZlC2IkVQWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
