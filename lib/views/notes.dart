@@ -123,16 +123,16 @@ class _NotesState extends State<Notes> {
                     stream: notesService.getNotesStream(),
                     builder: (context, snapshot) {
                       List notes = snapshot.data?.docs ?? [];
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
-                      }
-                      if (notes.isEmpty) {
+                      // if (snapshot.connectionState == ConnectionState.waiting) {
+                      //   return CircularProgressIndicator();
+                      // }
+                      if (notes.isEmpty &&
+                          (snapshot.connectionState == ConnectionState.done)) {
                         return Text('No notes available.');
                       }
                       // Create a list of widgets for each note
                       List<Widget> noteWidgets = notes.map((note) {
-                        final data = Note.fromJson(note.data());
-                        return NotesCard(data);
+                        return NotesCard(note.data());
                       }).toList();
 
                       // Create a list of rows with two notes in each row

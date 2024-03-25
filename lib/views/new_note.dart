@@ -1,4 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+import 'package:notecraft/models/note.dart';
+import 'package:notecraft/services/notes_service.dart';
+import 'package:notecraft/views/notes.dart';
 
 class NewNote extends StatefulWidget {
   const NewNote({Key? key}) : super(key: key);
@@ -12,6 +18,8 @@ class _NewNoteState extends State<NewNote> {
   final titleController = TextEditingController();
   final noteController = TextEditingController();
   bool isKeyboardOpen = false;
+  final noteService = NotesService();
+  String currentDate = DateFormat('MMMM d, y\'').format(DateTime.now());
 
   @override
   void dispose() {
@@ -45,7 +53,16 @@ class _NewNoteState extends State<NewNote> {
                       size: 32,
                     ),
                     onPressed: () {
-                      // Add your button functionality here
+                      Note note = Note(
+                        title: titleController.text,
+                        content: noteController.text,
+                        createdAt: DateTime.now(),
+                        updatedAt: DateTime.now(),
+                      );
+
+                      noteService.addNotes(note);
+
+                      context.goNamed('home');
                     },
                   );
                 } else {
@@ -87,7 +104,7 @@ class _NewNoteState extends State<NewNote> {
                     }),
                 SizedBox(height: 20),
                 Text(
-                  'March 1 10:18AM',
+                  currentDate,
                   style: TextStyle(fontWeight: FontWeight.w200, fontSize: 12),
                 ),
                 SizedBox(height: 25),
