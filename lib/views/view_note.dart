@@ -23,6 +23,7 @@ class _ViewNoteState extends State<ViewNote> {
   final noteController = TextEditingController();
   final noteService = NotesService();
   late String dateAdded;
+  bool isKeyboardOpen = false;
 
   // @override
   void initState() {
@@ -31,7 +32,6 @@ class _ViewNoteState extends State<ViewNote> {
     titleController.text = widget.note.title;
     noteController.text = widget.note.content;
     dateAdded = DateFormat('MMMM d, y\'').format(widget.note.createdAt);
-
   }
 
   @override
@@ -39,6 +39,14 @@ class _ViewNoteState extends State<ViewNote> {
     titleController.dispose();
     noteController.dispose();
     super.dispose();
+  }
+
+  update() {
+    Note updateValues = widget.note
+        .copyWith(titleController.text, noteController.text, DateTime.now());
+
+    noteService.updateNote(updateValues);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -50,31 +58,24 @@ class _ViewNoteState extends State<ViewNote> {
             Icons.arrow_back,
             size: 32,
           ),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: update,
         ),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 20),
             child: Builder(
               builder: (context) {
-                return IconButton(
-                  icon: Icon(
-                    Icons.check,
-                    size: 32,
-                  ),
-                  onPressed: () {
-                    // Note note = Note(
-                    //   title: titleController.text,
-                    //   content: noteController.text,
-                    //   createdAt: DateTime.now(),
-                    //   updatedAt: DateTime.now(),
-                    // );
-
-                    // noteService.addNotes(note);
-
-                    context.goNamed('home');
-                  },
-                );
+                if (isKeyboardOpen) {
+                  return IconButton(
+                    icon: Icon(
+                      Icons.check,
+                      size: 32,
+                    ),
+                    onPressed: update,
+                  );
+                } else {
+                  return SizedBox.shrink();
+                }
               },
             ),
           )
@@ -100,6 +101,12 @@ class _ViewNoteState extends State<ViewNote> {
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.only(bottom: 5),
                   ),
+                  onChanged: (value) => {
+                    setState(
+                      () => isKeyboardOpen =
+                          FocusScope.of(context).hasFocus ? true : false,
+                    )
+                  },
                 ),
                 SizedBox(height: 20),
                 Text(
@@ -120,6 +127,12 @@ class _ViewNoteState extends State<ViewNote> {
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.only(bottom: 5),
                   ),
+                  onChanged: (value) => {
+                    setState(
+                      () => isKeyboardOpen =
+                          FocusScope.of(context).hasFocus ? true : false,
+                    )
+                  },
                 ),
               ],
             ),

@@ -5,7 +5,7 @@ class NotesService {
   final CollectionReference notesCollection = FirebaseFirestore.instance
       .collection('notes')
       .withConverter<Note>(
-          fromFirestore: (snapshot, options) => Note.fromJson(snapshot.data()!),
+          fromFirestore: (snapshot, options) => Note.fromJson(snapshot.data()!,snapshot.id),
           toFirestore: (Note note, _) => note.toFirestore());
 
   Stream<QuerySnapshot> getNotesStream() {
@@ -14,5 +14,9 @@ class NotesService {
 
   void addNotes(Note note) async {
     notesCollection.add(note);
+  }
+
+  void updateNote(Note note) async{
+    notesCollection.doc(note.id).update(note.toFirestore());
   }
 }

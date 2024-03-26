@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 class Note {
   final String _collectionReference = 'notes';
 
+  String? id;
   final String title;
   final String content;
   final DateTime createdAt;
@@ -13,6 +14,7 @@ class Note {
   final String? password;
 
   Note({
+    this.id,
     required this.title,
     required this.content,
     required this.createdAt,
@@ -21,8 +23,9 @@ class Note {
     this.password,
   });
 
-  factory Note.fromJson(Map<String, dynamic> json) {
+  factory Note.fromJson(Map<String, dynamic> json, String noteId) {
     return Note(
+      id: noteId,
       title: json['title'] ?? '',
       content: json['content'] ?? '',
       createdAt: (json['created_at'] as Timestamp).toDate(),
@@ -30,6 +33,15 @@ class Note {
       folderId: json['folderId'] ?? '',
       password: json['password'] ?? '',
     );
+  }
+
+  Note copyWith(String? title, String? content, DateTime updatedAt) {
+    return Note(
+        id: this.id,
+        title: title ?? this.title,
+        content: content ?? this.content,
+        createdAt: this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt);
   }
 
   Map<String, dynamic> toFirestore() {
