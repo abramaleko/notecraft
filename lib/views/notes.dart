@@ -132,7 +132,10 @@ class _NotesState extends State<Notes> {
                       }
                       // Create a list of widgets for each note
                       List<Widget> noteWidgets = notes.map((note) {
-                        return NotesCard(note.data());
+                        return GestureDetector(
+                            onTap: () => context.goNamed('view-note',
+                                extra: note.data()),
+                            child: NotesCard(note.data()));
                       }).toList();
 
                       // Create a list of rows with two notes in each row
