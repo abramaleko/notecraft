@@ -5,18 +5,22 @@ class NotesService {
   final CollectionReference notesCollection = FirebaseFirestore.instance
       .collection('notes')
       .withConverter<Note>(
-          fromFirestore: (snapshot, options) => Note.fromJson(snapshot.data()!,snapshot.id),
+          fromFirestore: (snapshot, options) =>
+              Note.fromJson(snapshot.data()!, snapshot.id),
           toFirestore: (Note note, _) => note.toFirestore());
 
   Stream<QuerySnapshot> getNotesStream() {
-    return notesCollection.orderBy("created_at", descending: true).snapshots();
+    return notesCollection
+        .orderBy("created_at", descending: true)
+        // Check for pending writes
+        .snapshots(includeMetadataChanges: true);
   }
 
   void addNotes(Note note) async {
     notesCollection.add(note);
   }
 
-  void updateNote(Note note) async{
+  void updateNote(Note note) async {
     notesCollection.doc(note.id).update(note.toFirestore());
   }
 }
