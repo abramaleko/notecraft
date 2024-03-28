@@ -12,7 +12,9 @@ Widget NotesCard(Note note) {
           children: [
             // Title text
             Text(
-              note.title,
+              note.title.isNotEmpty
+                  ? note.title
+                  : note.content.substring(0, 20),
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold,
@@ -20,7 +22,7 @@ Widget NotesCard(Note note) {
               ),
             ),
             SizedBox(height: 8.0), // Add spacing between title and content
-  
+
             // Content text
             Text(
               note.content,
@@ -29,8 +31,7 @@ Widget NotesCard(Note note) {
               ),
               maxLines: 3,
             ),
-            SizedBox(
-                height: 9.0), // Add spacing between content and date/time
+            SizedBox(height: 9.0), // Add spacing between content and date/time
             Text(
               note.formatDate(note.createdAt),
               style: TextStyle(
