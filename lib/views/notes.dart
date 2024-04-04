@@ -4,6 +4,7 @@ import 'package:notecraft/services/notes_service.dart';
 import 'package:notecraft/widgets/notes_cards.dart';
 import 'package:notecraft/widgets/notes_folder.dart';
 import 'package:notecraft/models/note.dart';
+import 'package:swipe_to/swipe_to.dart';
 
 class Notes extends StatefulWidget {
   const Notes({super.key});
@@ -160,20 +161,34 @@ class _NotesState extends State<Notes> {
 
                     // Return a column with all the rows wrapped inside a SingleChildScrollView
                     return SingleChildScrollView(
-                      child: Column(
-                        children: rows,
+                      child: SwipeTo(
+                        onLeftSwipe: (details) {
+                          setState(() {
+                            _selectedIndex = 2;
+                          });
+                        },
+                        child: Column(
+                          children: rows,
+                        ),
                       ),
                     );
                   },
                 ),
               ),
             if (_selectedIndex == 2)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  NotesFolder(),
-                  NotesFolder(),
-                ],
+              SwipeTo(
+                onRightSwipe: (details) {
+                  setState(() {
+                    _selectedIndex = 1;
+                  });
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    NotesFolder(),
+                    NotesFolder(),
+                  ],
+                ),
               )
           ],
         ),
