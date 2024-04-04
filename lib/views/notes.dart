@@ -15,7 +15,40 @@ class Notes extends StatefulWidget {
 
 class _NotesState extends State<Notes> {
   int _selectedIndex = 1;
+  bool _showAppBarText = false;
+  ScrollController _scrollController = ScrollController();
+
   final NotesService notesService = NotesService();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Add a listener to the ScrollController
+    _scrollController.addListener(_handleScroll);
+  }
+
+  void _handleScroll() {
+    if (_scrollController.position.atEdge) {
+      if (_scrollController.position.pixels == 0) {
+        // User has scrolled to the top
+        print('Scrolled to the top');
+        if (_showAppBarText) {
+          setState(() {
+            _showAppBarText = false;
+          });
+        }
+      } else {
+        // User has scrolled to the bottom
+        // print('Scrolled to the bottom');
+        if (!_showAppBarText) {
+          setState(() {
+            _showAppBarText = true;
+          });
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +65,35 @@ class _NotesState extends State<Notes> {
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(13, 65, 13, 5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Notes',
-              style: TextStyle(fontSize: 27, fontWeight: FontWeight.w700),
+      body: CustomScrollView(
+        controller: _scrollController, // Assign the controller
+        slivers: [
+          if (_showAppBarText)
+            SliverAppBar(
+              title: Text(
+                'Notes',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              ),
+              floating: true,
+              snap: true,
+              pinned: true,
+              centerTitle: true,
+              expandedHeight: 60,
+              surfaceTintColor: Colors.transparent,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Container(), // You can add background widget here
+              ),
             ),
-            SizedBox(
-              height: 15,
-            ),
+          SliverList(
+              delegate: SliverChildListDelegate([
+            if (!_showAppBarText) // Show the text in SliverList only when app bar text is hidden
+              Padding(
+                padding: const EdgeInsets.only(left: 13, right: 13, top: 70),
+                child: Text(
+                  'Notes',
+                  style: TextStyle(fontSize: 27, fontWeight: FontWeight.w700),
+                ),
+              ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -161,14 +211,18 @@ class _NotesState extends State<Notes> {
 
                     // Return a column with all the rows wrapped inside a SingleChildScrollView
                     return SingleChildScrollView(
-                      child: SwipeTo(
-                        onLeftSwipe: (details) {
-                          setState(() {
-                            _selectedIndex = 2;
-                          });
-                        },
-                        child: Column(
-                          children: rows,
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(left: 13, right: 13, top: 15),
+                        child: SwipeTo(
+                          onLeftSwipe: (details) {
+                            setState(() {
+                              _selectedIndex = 2;
+                            });
+                          },
+                          child: Column(
+                            children: rows,
+                          ),
                         ),
                       ),
                     );
@@ -176,22 +230,25 @@ class _NotesState extends State<Notes> {
                 ),
               ),
             if (_selectedIndex == 2)
-              SwipeTo(
-                onRightSwipe: (details) {
-                  setState(() {
-                    _selectedIndex = 1;
-                  });
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    NotesFolder(),
-                    NotesFolder(),
-                  ],
+              Padding(
+                padding: const EdgeInsets.only(left: 13, right: 13, top: 15),
+                child: SwipeTo(
+                  onRightSwipe: (details) {
+                    setState(() {
+                      _selectedIndex = 1;
+                    });
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      NotesFolder(),
+                      NotesFolder(),
+                    ],
+                  ),
                 ),
               )
-          ],
-        ),
+          ])),
+        ],
       ),
     );
   }
