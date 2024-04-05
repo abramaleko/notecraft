@@ -5,6 +5,8 @@ Widget NotesCard(Note note) {
   return Container(
     width: 190,
     child: Card(
+      elevation: 0,
+      // shadowColor: Colors.grey.shade200,
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
