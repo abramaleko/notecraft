@@ -7,7 +7,7 @@ import 'package:notecraft/models/note.dart';
 import 'package:swipe_to/swipe_to.dart';
 
 class Notes extends StatefulWidget {
-  const Notes({super.key});
+  Notes({super.key});
 
   @override
   State<Notes> createState() => _NotesState();
@@ -18,12 +18,21 @@ class _NotesState extends State<Notes> {
   bool _showAppBarText = false;
   ScrollController _scrollController = ScrollController();
 
-  final NotesService notesService = NotesService();
+  late final NotesService notesService;
+  List notes = [];
 
   @override
   void initState() {
     super.initState();
 
+    notesService = NotesService();
+    notesService.getNotesStream().then((querySnapshot) {
+      for (var docSnapshot in querySnapshot.docs) {
+        setState(() {
+          notes.add(docSnapshot.data());
+        });
+      }
+    });
     // Add a listener to the ScrollController
     _scrollController.addListener(_handleScroll);
   }
@@ -78,7 +87,7 @@ class _NotesState extends State<Notes> {
               snap: true,
               pinned: true,
               centerTitle: true,
-              expandedHeight: 60,
+              expandedHeight: 45,
               backgroundColor: Colors.grey.shade100,
               scrolledUnderElevation: 0.0,
               flexibleSpace: FlexibleSpaceBar(
@@ -89,7 +98,7 @@ class _NotesState extends State<Notes> {
               delegate: SliverChildListDelegate([
             if (!_showAppBarText) // Show the text in SliverList only when app bar text is hidden
               Padding(
-                padding: const EdgeInsets.only(left: 13, right: 13, top: 70),
+                padding: const EdgeInsets.only(left: 13, right: 13, top: 55),
                 child: Text(
                   'Notes',
                   style: TextStyle(fontSize: 27, fontWeight: FontWeight.w700),
@@ -171,26 +180,15 @@ class _NotesState extends State<Notes> {
               height: 20,
             ),
             if (_selectedIndex == 1)
-              StreamBuilder(
-                stream: notesService.getNotesStream(),
-                builder: (context, snapshot) {
-                  print('loading data');
-                  List notes = snapshot.data?.docs ?? [];
-                  if (notes.isEmpty &&
-                      (snapshot.connectionState == ConnectionState.done)) {
-                    return Center(child: Text('No notes available.'));
-                  }
-              
-                  // Create a list of widgets for each note
+              Builder(
+                builder: (context) {
                   List<Widget> noteWidgets = notes.map((note) {
                     return GestureDetector(
-                      onTap: () =>
-                          context.goNamed('view-note', extra: note.data()),
-                      child: NotesCard(note.data()),
+                      onTap: () => context.goNamed('view-note', extra: note),
+                      child: NotesCard(note),
                     );
                   }).toList();
-              
-                  // Create a list of rows with two notes in each row
+
                   List<Widget> rows = [];
                   for (int i = 0; i < noteWidgets.length; i += 2) {
                     if (i + 1 < noteWidgets.length) {
@@ -209,12 +207,11 @@ class _NotesState extends State<Notes> {
                       ));
                     }
                   }
-              
-                  // Return a column with all the rows wrapped inside a SingleChildScrollView
+
                   return SingleChildScrollView(
                     child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 13, right: 13, top: 15),
+                      padding: const EdgeInsets.only(
+                          left: 13, right: 13, top: 10, bottom: 20),
                       child: SwipeTo(
                         onLeftSwipe: (details) {
                           setState(() {
