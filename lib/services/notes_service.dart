@@ -9,11 +9,9 @@ class NotesService {
               Note.fromJson(snapshot.data()!, snapshot.id),
           toFirestore: (Note note, _) => note.toFirestore());
 
-  Stream<QuerySnapshot> getNotesStream() {
-    return notesCollection
-        .orderBy("created_at", descending: true)
-        // Check for pending writes
-        .snapshots(includeMetadataChanges: true);
+  Future<QuerySnapshot> getNotesStream()async {
+    return await notesCollection
+        .orderBy("created_at", descending: true).get();
   }
 
   void addNotes(Note note) async {
