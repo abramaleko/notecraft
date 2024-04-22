@@ -2,14 +2,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notecraft/firebase_options.dart';
+import 'package:notecraft/provider/note_provider.dart';
 import 'package:notecraft/routes/app_routes.dart';
+import 'package:notecraft/services/notes_service.dart';
 import 'package:notecraft/views/notes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => NoteProvider(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:notecraft/models/note.dart';
+import 'package:notecraft/provider/note_provider.dart';
 
 class NotesService {
   final CollectionReference notesCollection = FirebaseFirestore.instance
@@ -9,16 +10,17 @@ class NotesService {
               Note.fromJson(snapshot.data()!, snapshot.id),
           toFirestore: (Note note, _) => note.toFirestore());
 
-  Future<QuerySnapshot> getNotesStream()async {
-    return await notesCollection
-        .orderBy("created_at", descending: true).get();
+  Future<QuerySnapshot> getNotesStream() async {
+    return await notesCollection.orderBy("created_at", descending: true).get();
   }
 
   void addNotes(Note note) async {
-    notesCollection.add(note);
+    await notesCollection.add(note);
+    await NoteProvider().fetchNotesData();
   }
 
   void updateNote(Note note) async {
-    notesCollection.doc(note.id).update(note.toFirestore());
+    await notesCollection.doc(note.id).update(note.toFirestore());
+    NoteProvider().fetchNotesData();
   }
 }

@@ -34,12 +34,23 @@ Widget NotesCard(Note note) {
               maxLines: 3,
             ),
             SizedBox(height: 9.0), // Add spacing between content and date/time
-            Text(
-              note.formatDate(note.createdAt),
-              style: TextStyle(
-                fontSize: 12.0,
-                color: Colors.grey,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  note.formatDate(note.createdAt),
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.grey,
+                  ),
+                ),
+               if(note.pinned == true)
+                Icon(
+                  Icons.push_pin,
+                  color: Colors.yellow.shade800,
+                  size: 16,
+                )
+              ],
             )
           ],
         ),

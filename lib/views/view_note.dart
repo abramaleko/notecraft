@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:notecraft/models/note.dart';
+import 'package:notecraft/provider/note_provider.dart';
 import 'package:notecraft/services/notes_service.dart';
 
 class ViewNote extends StatefulWidget {
@@ -41,18 +42,22 @@ class _ViewNoteState extends State<ViewNote> {
     super.dispose();
   }
 
-  update() {
-    Note updateValues = widget.note
-        .copyWith(titleController.text, noteController.text, DateTime.now());
-
+  update({bool? pinned}) {
+    Note updateValues = widget.note.copyWith(
+        titleController.text, noteController.text, DateTime.now(), pinned);
     noteService.updateNote(updateValues);
-    Navigator.of(context).pop();
+    // print(NoteProvider().notes);
+    // Navigator.of(context).pop();
+    context.goNamed('home');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
+        backgroundColor: Colors.grey.shade100,
+        elevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -78,6 +83,19 @@ class _ViewNoteState extends State<ViewNote> {
                 }
               },
             ),
+          ),
+          PopupMenuButton(
+            padding: EdgeInsetsDirectional.all(10),
+            position: PopupMenuPosition.under,
+            elevation: 0,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Text(widget.note.pinned == false ? 'Pin' : 'Unpin'),
+                onTap: () =>
+                    update(pinned: widget.note.pinned == true ? false : true),
+              ),
+              PopupMenuItem(child: Text('Delete')),
+            ],
           )
         ],
       ),

@@ -10,6 +10,7 @@ class Note {
   final String content;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final bool? pinned;
   final String? folderId; // Optional field for referencing the folder
   final String? password;
 
@@ -19,6 +20,7 @@ class Note {
     required this.content,
     required this.createdAt,
     required this.updatedAt,
+    this.pinned,
     this.folderId,
     this.password,
   });
@@ -30,16 +32,19 @@ class Note {
       content: json['content'] ?? '',
       createdAt: (json['created_at'] as Timestamp).toDate(),
       updatedAt: (json['updated_at'] as Timestamp).toDate(),
+      pinned: json['pinned'] ?? false,
       folderId: json['folderId'] ?? '',
       password: json['password'] ?? '',
     );
   }
 
-  Note copyWith(String? title, String? content, DateTime updatedAt) {
+  Note copyWith(
+      String? title, String? content, DateTime updatedAt, bool? pinned) {
     return Note(
         id: this.id,
         title: title ?? this.title,
         content: content ?? this.content,
+        pinned: pinned ?? this.pinned,
         createdAt: this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt);
   }
@@ -48,6 +53,7 @@ class Note {
     return {
       if (title != null) "title": title,
       if (content != null) "content": content,
+      if (pinned != null) "pinned": pinned,
       if (createdAt != null) "created_at": createdAt,
       if (updatedAt != null) "updated_at": updatedAt,
       if (folderId != null) "folderId": folderId,

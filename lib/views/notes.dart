@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:notecraft/provider/note_provider.dart';
 import 'package:notecraft/services/notes_service.dart';
 import 'package:notecraft/widgets/notes_cards.dart';
 import 'package:notecraft/widgets/notes_folder.dart';
 import 'package:notecraft/models/note.dart';
+import 'package:provider/provider.dart';
 import 'package:swipe_to/swipe_to.dart';
 
 class Notes extends StatefulWidget {
@@ -25,16 +27,19 @@ class _NotesState extends State<Notes> {
   void initState() {
     super.initState();
 
-    notesService = NotesService();
-    notesService.getNotesStream().then((querySnapshot) {
-      for (var docSnapshot in querySnapshot.docs) {
-        setState(() {
-          notes.add(docSnapshot.data());
-        });
-      }
-    });
+    // notesService = NotesService();
+    // notesService.getNotesStream().then((querySnapshot) {
+    //   for (var docSnapshot in querySnapshot.docs) {
+    //     setState(() {
+    //       notes.add(docSnapshot.data());
+    //     });
+    //   }
+    // });
     // Add a listener to the ScrollController
     _scrollController.addListener(_handleScroll);
+
+    // NoteProvider noteProvider =
+    Provider.of<NoteProvider>(context, listen: false).fetchNotesData();
   }
 
   void _handleScroll() {
@@ -180,9 +185,9 @@ class _NotesState extends State<Notes> {
               height: 20,
             ),
             if (_selectedIndex == 1)
-              Builder(
-                builder: (context) {
-                  List<Widget> noteWidgets = notes.map((note) {
+              Consumer<NoteProvider>(
+                builder: (context, noteProvider, child) {
+                  List<Widget> noteWidgets = noteProvider.notes.map((note) {
                     return GestureDetector(
                       onTap: () => context.goNamed('view-note', extra: note),
                       child: NotesCard(note),
