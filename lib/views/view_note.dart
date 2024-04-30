@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:notecraft/models/note.dart';
-import 'package:notecraft/provider/note_provider.dart';
 import 'package:notecraft/services/notes_service.dart';
 
 class ViewNote extends StatefulWidget {
@@ -42,13 +41,11 @@ class _ViewNoteState extends State<ViewNote> {
     super.dispose();
   }
 
-  update({bool? pinned}) {
+  update({bool? pinned}) async {
     Note updateValues = widget.note.copyWith(
         titleController.text, noteController.text, DateTime.now(), pinned);
     noteService.updateNote(updateValues);
-    // print(NoteProvider().notes);
-    // Navigator.of(context).pop();
-    context.goNamed('home');
+    context.pop();
   }
 
   @override
