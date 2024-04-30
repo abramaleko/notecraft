@@ -23,7 +23,6 @@ class _NotesState extends State<Notes> {
   @override
   void initState() {
     super.initState();
-
     // Add a listener to the ScrollController
     _scrollController.addListener(_handleScroll);
   }
