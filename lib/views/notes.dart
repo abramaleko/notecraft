@@ -94,7 +94,54 @@ class _NotesState extends State<Notes> {
                   style: TextStyle(fontSize: 27, fontWeight: FontWeight.w700),
                 ),
               ),
-            
+            StreamBuilder(
+                stream: notesService.getNotesStream(),
+                builder: (context, snapshot) {
+                  List notes = snapshot.data?.docs ?? [];
+                  if (notes.isEmpty &&
+                      (snapshot.connectionState == ConnectionState.done)) {
+                    return Center(child: Text('No notes available.'));
+                  }
+
+                  // Create a list of widgets for each note
+                  List<Widget> noteWidgets = notes.map((note) {
+                    return GestureDetector(
+                      onTap: () =>
+                          context.goNamed('view-note', extra: note.data()),
+                      child: NotesCard(note.data()),
+                    );
+                  }).toList();
+
+                  // Create a list of rows with two notes in each row
+                  List<Widget> rows = [];
+                  for (int i = 0; i < noteWidgets.length; i += 2) {
+                    if (i + 1 < noteWidgets.length) {
+                      rows.add(Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          noteWidgets[i],
+                          noteWidgets[i + 1],
+                        ],
+                      ));
+                    } else {
+                      // If there's an odd number of notes, add a single note in the last row
+                      rows.add(Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [noteWidgets[i]],
+                      ));
+                    }
+                  }
+                  // Return a column with all the rows wrapped inside a SingleChildScrollView
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 13, right: 13, top: 15),
+                      child: Column(
+                        children: rows,
+                      ),
+                    ),
+                  );
+                })
           ])),
         ],
       ),

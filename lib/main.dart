@@ -6,7 +6,6 @@ import 'package:notecraft/routes/app_routes.dart';
 import 'package:notecraft/services/notes_service.dart';
 import 'package:notecraft/views/notes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
