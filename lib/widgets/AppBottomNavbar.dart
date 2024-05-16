@@ -22,7 +22,7 @@ class _AppBottomNavbarState extends State<AppBottomNavbar> {
     return Scaffold(
         body: _widgetOptions.elementAt(_currentIndex),
         bottomNavigationBar: SizedBox(
-          height: 75,
+          height: 66,
           child: BottomNavigationBar(
             selectedIconTheme: IconThemeData(
               color: Colors.black,
@@ -39,13 +39,13 @@ class _AppBottomNavbarState extends State<AppBottomNavbar> {
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.feed,
-                    size: 28,
+                    size: 22,
                   ),
                   label: 'Notes'),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.checklist_rtl,
-                    size: 28,
+                    size: 22,
                   ),
                   label: 'Todos')
             ],

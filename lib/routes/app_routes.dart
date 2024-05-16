@@ -27,11 +27,13 @@ class AppRoutes {
                   name: 'home',
                   routes: [
                     GoRoute(
+                        parentNavigatorKey: _rootNavigatorKey,
                         path: 'new-note',
                         builder: (context, state) => NewNote(),
                         name: 'new-note'),
                     GoRoute(
                         path: 'view-note',
+                        parentNavigatorKey: _rootNavigatorKey,
                         builder: (context, state) {
                           Note note = state.extra as Note;
                           return ViewNote(note: note);

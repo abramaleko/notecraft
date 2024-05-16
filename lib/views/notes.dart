@@ -119,8 +119,8 @@ class _NotesState extends State<Notes> {
                       rows.add(Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          noteWidgets[i],
-                          noteWidgets[i + 1],
+                          Expanded(child: noteWidgets[i]),
+                          Expanded(child: noteWidgets[i + 1]),
                         ],
                       ));
                     } else {
