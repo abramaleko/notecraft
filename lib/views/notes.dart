@@ -5,48 +5,12 @@ import 'package:notecraft/widgets/notes_cards.dart';
 import 'package:notecraft/widgets/notes_folder.dart';
 import 'package:notecraft/models/note.dart';
 
-class Notes extends StatefulWidget {
+class Notes extends StatelessWidget {
   Notes({super.key});
 
-  @override
-  State<Notes> createState() => _NotesState();
-}
-
-class _NotesState extends State<Notes> {
-  int _selectedIndex = 1;
-  bool _showAppBarText = false;
-  ScrollController _scrollController = ScrollController();
-
   final NotesService notesService = NotesService();
+
   List notes = [];
-
-  @override
-  void initState() {
-    super.initState();
-    // Add a listener to the ScrollController
-    _scrollController.addListener(_handleScroll);
-  }
-
-  void _handleScroll() {
-    if (_scrollController.position.atEdge) {
-      if (_scrollController.position.pixels == 0) {
-        // User has scrolled to the top
-        if (_showAppBarText) {
-          setState(() {
-            _showAppBarText = false;
-          });
-        }
-      } else {
-        // User has scrolled to the bottom
-        // print('Scrolled to the bottom');
-        if (!_showAppBarText) {
-          setState(() {
-            _showAppBarText = true;
-          });
-        }
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,35 +29,27 @@ class _NotesState extends State<Notes> {
         ),
       ),
       body: CustomScrollView(
-        controller: _scrollController, // Assign the controller
         slivers: [
-          if (_showAppBarText)
-            SliverAppBar(
+          SliverAppBar(
+            surfaceTintColor: Colors.transparent,
+            expandedHeight: 70, // Adjust the height as needed 25
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: EdgeInsets.fromLTRB(25, 5, 0, 15),
               title: const Text(
                 'Notes',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black),
               ),
-              floating: true,
-              snap: true,
-              pinned: true,
-              centerTitle: true,
-              expandedHeight: 45,
-              backgroundColor: Colors.grey.shade100,
-              scrolledUnderElevation: 0.0,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Container(), // You can add background widget here
+              background: Container(
+                color: Color.fromARGB(255, 243, 241, 241),
               ),
             ),
+          ),
           SliverList(
               delegate: SliverChildListDelegate([
-            if (!_showAppBarText) // Show the text in SliverList only when app bar text is hidden
-              const Padding(
-                padding: EdgeInsets.only(left: 13, right: 13, top: 55),
-                child: Text(
-                  'Notes',
-                  style: TextStyle(fontSize: 27, fontWeight: FontWeight.w700),
-                ),
-              ),
             StreamBuilder(
                 stream: notesService.getNotesStream(),
                 builder: (context, snapshot) {
