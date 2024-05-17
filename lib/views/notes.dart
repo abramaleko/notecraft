@@ -32,7 +32,7 @@ class Notes extends StatelessWidget {
         slivers: [
           SliverAppBar(
             surfaceTintColor: Colors.transparent,
-            expandedHeight: 70, // Adjust the height as needed 25
+            expandedHeight: 65, // Adjust the height as needed 25
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: EdgeInsets.fromLTRB(25, 5, 0, 15),
