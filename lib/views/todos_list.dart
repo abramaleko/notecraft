@@ -183,7 +183,11 @@ class _TodosListState extends State<TodosList> {
                                   activeColor:
                                       Theme.of(context).colorScheme.primary,
                                   value: todo.completed,
-                                  onChanged: (value) {},
+                                  onChanged: (value) {
+                                    Todo updateTask =
+                                        todo.copyWith(completedValue: value!);
+                                    TodosService().updateTask(updateTask);
+                                  },
                                 ),
                               ),
                             ),

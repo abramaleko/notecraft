@@ -21,7 +21,7 @@ class TodosService {
     todosCollection.add(todo);
   }
 
-  // void updateNote(Note note) async {
-  //   notesCollection.doc(note.id).update(note.toFirestore());
-  // }
+  void updateTask(Todo todo) async {
+    todosCollection.doc(todo.id).update(todo.toFirestore());
+  }
 }

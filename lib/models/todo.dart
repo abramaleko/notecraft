@@ -28,4 +28,12 @@ class Todo {
       if (reminder != null) "reminder": reminder,
     };
   }
+
+    Todo copyWith({required bool completedValue}) {
+    return Todo(
+        id: this.id,
+        task: this.task,
+        reminder: reminder,
+        completed: completedValue,);
+  }
 }
