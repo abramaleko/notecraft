@@ -14,7 +14,10 @@ class NotesService {
           toFirestore: (Note note, _) => note.toFirestore());
 
   Stream<QuerySnapshot> getNotesStream() {
-    return notesCollection.orderBy("created_at", descending: true).snapshots();
+    return notesCollection
+        .orderBy("pinned", descending: true)
+        .orderBy("created_at", descending: true)
+        .snapshots();
   }
 
   void addNotes(Note note) async {
