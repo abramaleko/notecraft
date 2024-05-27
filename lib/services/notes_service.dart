@@ -27,4 +27,8 @@ class NotesService {
   void updateNote(Note note) async {
     notesCollection.doc(note.id).update(note.toFirestore());
   }
+
+  void deleteNote(noteId) async {
+    notesCollection.doc(noteId).delete();
+  }
 }
