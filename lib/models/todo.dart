@@ -29,10 +29,10 @@ class Todo {
     };
   }
 
-    Todo copyWith({required bool completedValue}) {
+    Todo copyWith({required bool completedValue,String? task}) {
     return Todo(
         id: this.id,
-        task: this.task,
+        task: task ?? this.task,
         reminder: reminder,
         completed: completedValue,);
   }

@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:notecraft/models/todo.dart';
 import 'package:notecraft/services/todos_service.dart';
 
-class NewTaskSheet {
+class ViewTaskDetails {
   BuildContext context;
 
-  NewTaskSheet({required this.context});
+  Todo todo;
 
-  Future displayNewTaskSheet() {
+  ViewTaskDetails({required this.context, required this.todo});
+
+  Future showTaskModal() {
     final _formKey = GlobalKey<FormState>();
     final taskController = TextEditingController();
     final TodosService todosService = TodosService();
+
+    taskController.text = todo.task;
 
     return showModalBottomSheet(
       backgroundColor: const Color.fromARGB(255, 243, 241, 241),
@@ -73,21 +77,21 @@ class NewTaskSheet {
                           ElevatedButton(
                             onPressed: () {
                               if (taskController.text.isNotEmpty) {
-                                Todo task = Todo(
-                                    task: taskController.text,
-                                    completed: false);
-                                TodosService().addTask(task);
-                                taskController.clear();
-                                taskController.dispose();
+                                todo = todo.copyWith(
+                                    completedValue: false,
+                                    task: taskController.text);
 
-                                //close the showModalBottomSheet
+                                TodosService().updateTask(todo);
+                                taskController.clear();
+
+                                // //close the showModalBottomSheet
                                 Navigator.pop(context);
                               }
                             },
                             child: const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 15),
                               child: Text(
-                                'Save',
+                                'Update',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),

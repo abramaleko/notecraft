@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:notecraft/models/todo.dart';
 import 'package:notecraft/services/todos_service.dart';
 import 'package:notecraft/widgets/NewTaskSheet.dart';
+import 'package:notecraft/widgets/ViewTaskDetails.dart';
 
 class TodosList extends StatefulWidget {
   const TodosList({Key? key});
@@ -12,13 +13,10 @@ class TodosList extends StatefulWidget {
 }
 
 class _TodosListState extends State<TodosList> {
-  final _formKey = GlobalKey<FormState>();
-  final taskController = TextEditingController();
   final TodosService todosService = TodosService();
 
   @override
   void dispose() {
-    taskController.dispose();
     super.dispose();
   }
 
@@ -98,10 +96,18 @@ class _TodosListState extends State<TodosList> {
                             SizedBox(
                               width: 5,
                             ),
-                            Text(
-                              todo.task,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 20),
+                            GestureDetector(
+                              onTap: () {
+                                if (!todo.completed) {
+                                  ViewTaskDetails(context: context, todo: todo)
+                                      .showTaskModal();
+                                }
+                              },
+                              child: Text(
+                                todo.task,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 20),
+                              ),
                             )
                           ],
                         ),
