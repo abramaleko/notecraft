@@ -60,46 +60,40 @@ class NewTaskSheet {
                     ],
                   ),
                   const SizedBox(height: 50),
-                  Builder(
-                    builder: (context) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          OutlinedButton.icon(
-                            onPressed: null,
-                            icon: const Icon(Icons.alarm_on),
-                            label: const Text('Set Reminder'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (taskController.text.isNotEmpty) {
-                                Todo task = Todo(
-                                    task: taskController.text,
-                                    completed: false);
-                                TodosService().addTask(task);
-                                taskController.clear();
-                                taskController.dispose();
+                  ElevatedButton(
+                    onPressed: () {
+                      if (taskController.text.isNotEmpty) {
+                        Todo task =
+                            Todo(task: taskController.text, completed: false);
+                        TodosService().addTask(task);
+                        taskController.clear();
+                        taskController.dispose();
 
-                                //close the showModalBottomSheet
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 15),
-                              child: Text(
-                                'Save',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                        ],
-                      );
+                        //close the showModalBottomSheet
+                        Navigator.pop(context);
+                      }
                     },
-                  )
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Text(
+                        'Save',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  // Builder(
+                  //   builder: (context) {
+                  //     return Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+
+                  //       ],
+                  //     );
+                  //   },
+                  // )
                 ],
               ),
             ),

@@ -24,4 +24,8 @@ class TodosService {
   void updateTask(Todo todo) async {
     todosCollection.doc(todo.id).update(todo.toFirestore());
   }
+
+  void deleteNote(todoId) async {
+    todosCollection.doc(todoId).delete();
+  }
 }

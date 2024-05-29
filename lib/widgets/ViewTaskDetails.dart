@@ -70,9 +70,22 @@ class ViewTaskDetails {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           OutlinedButton.icon(
-                            onPressed: null,
-                            icon: const Icon(Icons.alarm_on),
-                            label: const Text('Set Reminder'),
+                            onPressed: () {
+                              todosService.deleteNote(todo.id);
+                              // //close the showModalBottomSheet
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                            label: const Text(
+                              'Delete',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(color: Colors.red),
+                            ),
                           ),
                           ElevatedButton(
                             onPressed: () {
