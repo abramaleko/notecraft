@@ -13,7 +13,7 @@ class NewTaskSheet {
     final TodosService todosService = TodosService();
 
     return showModalBottomSheet(
-      backgroundColor: const Color.fromARGB(255, 243, 241, 241),
+      backgroundColor: Theme.of(context).colorScheme.background,
       context: context,
       isScrollControlled: true,
       barrierColor: Colors.black45.withOpacity(0.5),
