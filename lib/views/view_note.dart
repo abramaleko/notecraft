@@ -48,12 +48,17 @@ class _ViewNoteState extends State<ViewNote> {
     context.pop();
   }
 
+  deleteNote(noteId) async {
+    notesService.deleteNote(noteId);
+    context.pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade100,
+        backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 0,
         leading: IconButton(
           icon: Icon(
@@ -91,7 +96,10 @@ class _ViewNoteState extends State<ViewNote> {
                 onTap: () =>
                     update(pinned: widget.note.pinned == true ? false : true),
               ),
-              PopupMenuItem(child: Text('Delete')),
+              PopupMenuItem(
+                child: Text('Delete'),
+                onTap: () => deleteNote(widget.note.id),
+              ),
             ],
           )
         ],

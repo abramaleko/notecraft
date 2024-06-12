@@ -6,6 +6,7 @@ import 'package:notecraft/routes/app_routes.dart';
 import 'package:notecraft/services/notes_service.dart';
 import 'package:notecraft/views/notes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'Theme/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,11 +23,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'NoteCraft',
       routerConfig: AppRoutes().routes,
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-          useMaterial3: true,
-          textTheme: GoogleFonts.robotoTextTheme()),
-      debugShowCheckedModeBanner: false,
+      theme: lightMode,
+      darkTheme: darkMode,
     );
   }
 }
