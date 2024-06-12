@@ -10,34 +10,35 @@ Notecraft is a versatile note-taking app with an integrated to-do list. It inclu
 
 ## Screenshots
 
-<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-
-<div style="flex: 1; min-width: 45%;">
-  <h3>Home Screen</h3>
-  <img src="screenshots/05.png" alt="Home Screen" style="height: 250px; object-fit: cover;">
-</div>
-
-<div style="flex: 1; min-width: 45%;">
-  <h3>Home Screen Dark Mode</h3>
-  <img src="screenshots/01.png" alt="Home Screen Dark Mode" style="height: 250px; object-fit: cover;">
-</div>
-
-<div style="flex: 1; min-width: 45%;">
-  <h3>View Note</h3>
-  <img src="screenshots/02.png" alt="View Note" style="height: 250px; object-fit: cover;">
-</div>
-
-<div style="flex: 1; min-width: 45%;">
-  <h3>To-Do List</h3>
-  <img src="screenshots/03.png" alt="To-Do List" style="height: 250px; object-fit: cover;">
-</div>
-
-<div style="flex: 1; min-width: 45%;">
-  <h3>Add To-Do List</h3>
-  <img src="screenshots/04.png" alt="Add To-Do List" style="height: 250px; object-fit: cover;">
-</div>
-
-</div>
+<table>
+  <tr>
+    <td>
+      <h3>Home Screen</h3>
+      <img src="screenshots/05.png" alt="Home Screen" height="250px">
+    </td>
+    <td>
+      <h3>Home Screen Dark Mode</h3>
+      <img src="screenshots/01.png" alt="Home Screen Dark Mode" height="250px">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3>View Note</h3>
+      <img src="screenshots/02.png" alt="View Note" height="250px">
+    </td>
+    <td>
+      <h3>To-Do List</h3>
+      <img src="screenshots/03.png" alt="To-Do List" height="250px">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3>Add To-Do List</h3>
+      <img src="screenshots/04.png" alt="Add To-Do List" height="250px">
+    </td>
+    <td></td>
+  </tr>
+</table>
 
 ## Installation
 
