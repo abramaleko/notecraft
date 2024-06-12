@@ -32,6 +32,7 @@ class _NewNoteState extends State<NewNote> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.background,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,

@@ -15,7 +15,7 @@ class Notes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 243, 241, 241),
+      backgroundColor: Theme.of(context).colorScheme.background,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 20.0),
         child: FloatingActionButton(
@@ -36,15 +36,18 @@ class Notes extends StatelessWidget {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: EdgeInsets.fromLTRB(25, 5, 0, 15),
-              title: const Text(
+              title: Text(
                 'Notes',
                 style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.black
+                      : Colors.white,
+                ),
               ),
               background: Container(
-                color: Color.fromARGB(255, 243, 241, 241),
+                color: Theme.of(context).colorScheme.background,
               ),
             ),
           ),
@@ -64,7 +67,7 @@ class Notes extends StatelessWidget {
                     return GestureDetector(
                       onTap: () =>
                           context.goNamed('view-note', extra: note.data()),
-                      child: NotesCard(note.data()),
+                      child: NotesCard(note.data(),context),
                     );
                   }).toList();
 

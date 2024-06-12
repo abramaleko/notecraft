@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:notecraft/models/note.dart';
 
-Widget NotesCard(Note note) {
+Widget NotesCard(Note note,context) {
   return Container(
     width: 190,
     child: Card(
       elevation: 0,
-      // shadowColor: Colors.grey.shade200,
+      color: Theme.of(context).cardColor,
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(

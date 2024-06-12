@@ -23,7 +23,7 @@ class _TodosListState extends State<TodosList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 243, 241, 241),
+      backgroundColor: Theme.of(context).colorScheme.background,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 20.0),
         child: FloatingActionButton(
@@ -44,16 +44,18 @@ class _TodosListState extends State<TodosList> {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: const EdgeInsets.fromLTRB(25, 5, 0, 15),
-              title: const Text(
+              title: Text(
                 "Todo's",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
-                  color: Colors.black,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.black
+                      : Colors.white,
                 ),
               ),
               background: Container(
-                color: const Color.fromARGB(255, 243, 241, 241),
+                color: Theme.of(context).colorScheme.background,
               ),
             ),
           ),

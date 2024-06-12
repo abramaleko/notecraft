@@ -27,7 +27,7 @@ class _AppBottomNavbarState extends State<AppBottomNavbar> {
             selectedIconTheme: IconThemeData(
               color: Colors.black,
             ),
-            selectedItemColor: Colors.black,
+            selectedItemColor: Colors.white,
             selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
             currentIndex: _currentIndex,
             onTap: (index) {
@@ -37,15 +37,19 @@ class _AppBottomNavbarState extends State<AppBottomNavbar> {
             },
             items: [
               BottomNavigationBarItem(
+                  backgroundColor: Colors.white54,
                   icon: Icon(
                     Icons.feed,
                     size: 22,
+                    color: Colors.white54,
                   ),
                   label: 'Notes'),
               BottomNavigationBarItem(
+                  backgroundColor: Colors.white54,
                   icon: Icon(
                     Icons.checklist_rtl,
                     size: 22,
+                    color: Colors.white54,
                   ),
                   label: 'Todos')
             ],
