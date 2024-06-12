@@ -13,6 +13,6 @@ ThemeData darkMode = ThemeData(
     // textTheme: GoogleFonts.robotoTextTheme(),
     colorScheme: ColorScheme.dark(
       background: Colors.grey.shade900,
-      primary: Colors.blue.shade600,
+      primary: Colors.yellow.shade800,
     ),
     cardColor: Colors.grey.shade800);
